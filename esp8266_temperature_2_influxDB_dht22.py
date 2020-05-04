@@ -3,11 +3,18 @@ sleep_main_cycle=10
 
 import network
 import time
-sta_if = network.WLAN(network.STA_IF); sta_if.active(True)
-# sta_if.scan()
-sta_if.connect("WifiUser", "WifiPasswd")
-time.sleep(2) # waiting for wifi
-sta_if.isconnected()
+
+sta_if = network.WLAN(network.STA_IF)
+if not sta_if.isconnected():
+    print('connecting to network...')
+    sta_if.active(True)
+    sta_if.connect("Wifi", "passwd")
+    time.sleep(sleep_wifi_init) # waiting for wifi
+    while not sta_if.isconnected():
+        pass
+print(sta_if.ifconfig())
+
+
 
 import dht
 import machine
